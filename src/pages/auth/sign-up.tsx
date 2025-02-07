@@ -27,8 +27,6 @@ export function SignUp() {
 
   async function handleSignUp(data: SignUpForm) {
     try {
-      console.log("🚀 ~ handleSignUp ~ data:", data);
-
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       toast.success("Estabelecimento cadastrado com sucesso.", {
