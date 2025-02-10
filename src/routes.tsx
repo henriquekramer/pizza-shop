@@ -6,12 +6,14 @@ import { AuthLayout } from "./pages/_layouts/auth";
 import { SignUp } from "./pages/auth/sign-up";
 import { Orders } from "./pages/app/orders/orders";
 import { Dashboard } from "./pages/app/dashboard/dashboard";
+import { NotFound } from "./pages/404";
 
 export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
         </Route>
