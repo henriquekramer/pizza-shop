@@ -8,7 +8,7 @@ import { Orders } from "./pages/app/orders/orders";
 import { Dashboard } from "./pages/app/dashboard/dashboard";
 import { NotFound } from "./pages/404";
 
-export const Router = () => {
+export const RouterProvider = () => {
   return (
     <BrowserRouter>
       <Routes>
