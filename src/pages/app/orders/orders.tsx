@@ -12,12 +12,29 @@ import { OrderTableFilters } from "./order-table-filters";
 import { Pagination } from "@/components/pagintation";
 import { useQuery } from "@tanstack/react-query";
 import { getOrders } from "@/api/get-orders";
+import { useSearchParams } from "react-router";
+import { z } from "zod";
 
 export function Orders() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const pageIndex = z.coerce
+    .number()
+    .transform((page) => page - 1)
+    .parse(searchParams.get("page") ?? "1");
+
   const { data: result } = useQuery({
-    queryKey: ["orders"],
-    queryFn: getOrders,
+    queryKey: ["orders", pageIndex],
+    queryFn: () => getOrders({ pageIndex }),
   });
+
+  function handlePaginate(pageIndex: number) {
+    setSearchParams((prev) => {
+      prev.set("page", (pageIndex + 1).toString());
+
+      return prev;
+    });
+  }
 
   return (
     <Fragment>
@@ -50,7 +67,14 @@ export function Orders() {
             </Table>
           </div>
 
-          <Pagination pageIndex={0} perPage={10} totalCount={105} />
+          {result && (
+            <Pagination
+              onPageChange={handlePaginate}
+              pageIndex={result.meta.pageIndex}
+              perPage={result.meta.perPage}
+              totalCount={result.meta.totalCount}
+            />
+          )}
         </div>
       </div>
     </Fragment>
