@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { Utensils } from "lucide-react";
 import { Fragment } from "react";
+import { MetricCardSkeleton } from "./metric-card-skeleton";
 
 export function DaysOrdersAmountCard() {
   const { data: dayOrdersAmount } = useQuery({
@@ -17,29 +18,31 @@ export function DaysOrdersAmountCard() {
         <Utensils className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
-        {dayOrdersAmount && (
+        {dayOrdersAmount ? (
           <Fragment>
             <span className="text-2xl font-bold tracking-tight">
               {dayOrdersAmount.amount.toLocaleString("pt-BR")}
             </span>
             <p className="text-xs text-muted-foreground">
               {dayOrdersAmount.diffFromYesterday >= 0 ? (
-                <>
+                <Fragment>
                   <span className="text-emerald-500 dark:text-emerald-400">
                     +{dayOrdersAmount.diffFromYesterday}%
                   </span>{" "}
                   em relação a ontem
-                </>
+                </Fragment>
               ) : (
-                <>
+                <Fragment>
                   <span className="text-rose-500 dark:text-rose-400">
                     {dayOrdersAmount.diffFromYesterday}%
                   </span>{" "}
                   em relação a ontem
-                </>
+                </Fragment>
               )}
             </p>
           </Fragment>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { DollarSign } from "lucide-react";
 import { Fragment } from "react";
+import { MetricCardSkeleton } from "./metric-card-skeleton";
 
 export function MonthCanceledOrdersAmount() {
   const { data: monthCanceledOrdersAmount } = useQuery({
@@ -19,7 +20,7 @@ export function MonthCanceledOrdersAmount() {
         <DollarSign className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
-        {monthCanceledOrdersAmount && (
+        {monthCanceledOrdersAmount ? (
           <Fragment>
             <span className="text-2xl font-bold tracking-tight">
               {monthCanceledOrdersAmount.amount.toLocaleString("pt-BR")}
@@ -42,6 +43,8 @@ export function MonthCanceledOrdersAmount() {
               )}
             </p>
           </Fragment>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>
